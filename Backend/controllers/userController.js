@@ -10,9 +10,10 @@ const getUser = async (req, res) => {
     } catch (error) {
         
         console.error(error.message);
-        res.status(500).json({
-            message:"Failed to fetch user",
-        });
+        next(error);
+        // res.status(500).json({
+        //     message:"Failed to fetch user",
+        // });
     }
 };
 
@@ -31,12 +32,10 @@ const getUserById = async (req, res) => {
         
     } catch (error) {
         console.error(error.message);
-        res.status(500).json({
-            message:"Failed to fetch user",
-        });
+        next();
     }
 };
-
+//error directly centralized error middleware me chale jyga
 const createUser = async (req, res) => {
     try {
       

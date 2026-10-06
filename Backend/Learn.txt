@@ -38,3 +38,67 @@ app.listen(PORT,()=>{
     console.log("Server starting running at : ",  PORT);
 });
 
+
+
+catch (error) {
+    res.status(500).json({
+        message: "Failed to fetch user"
+    });
+}
+
+Ab:
+catch (error) {
+    next(error);
+}
+
+Error directly centralized error middleware me chala jayega.
+
+try {
+    // code
+} catch (error) {
+    res.status(500).json({
+        message: "Failed to fetch users"
+    });
+}
+
+har function me repeat ho raha hai.
+Kal agar 20 controllers hue:
+20 try/catch 😵
+
+Isliye hum centralized error handling banayenge. he reaseon why we write next(error);
+
+HTTP Status Codes ===>
+
+| Code | Meaning | Kab use karenge |
+|---|---|---|
+| `200` | OK | Successful GET/UPDATE |
+| `201` | Created | Successful POST |
+| `400` | Bad Request | User ne galat data bheja |
+| `401` | Unauthorized | Login/token missing/invalid |
+| `403` | Forbidden | Permission nahi hai |
+| `404` | Not Found | Resource nahi mila |
+| `409` | Conflict | Duplicate email etc. |
+| `500` | Server Error | Server-side unexpected error |
+
+
+
+Authentication with email and password
+1. User Model ko authentication ke liye update
+        ↓
+2. Register API
+        ↓
+3. Password hashing — bcrypt
+        ↓
+4. Login API
+        ↓
+5. JWT kya hai + kaise generate hota hai
+        ↓
+6. Auth Middleware
+        ↓
+7. Protected Route
+        ↓
+8. Current Logged-in User
+        ↓
+9. Authorization
+        ↓
+10. Final error handling + validation

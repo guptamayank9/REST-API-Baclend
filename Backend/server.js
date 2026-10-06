@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require('express');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
+const errormiddleware = require('./middleware/errrormiddleware');
 
 const app = express();
 
@@ -22,6 +23,9 @@ app.get("/",(req,res)=>{
 });
 
 app.use('/api/users',userRoutes);
+
+//error handling middleware
+app.use(errormiddleware);
 
 // app.get("/api/users",(req,res)=>{
 //     res.json({
