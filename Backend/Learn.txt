@@ -102,3 +102,90 @@ Authentication with email and password
 9. Authorization
         ↓
 10. Final error handling + validation
+
+bcrypt is a password-hashing algorithm designed to securely hash passwords.
+ It is intentionally computationally expensive, which makes brute-force attacks harder.
+
+ bcrypt.hash(password, 10)
+                         ↑
+                    cost factor
+
+POST /api/auth/login
+        ↓
+email + password
+        ↓
+MongoDB me user find
+        ↓
+bcrypt.compare()
+        ↓
+Password correct?
+   ↓             ↓
+ YES             NO
+ ↓               ↓
+JWT             401
+ ↓
+Token
+const isMatch = await bcrypt.compare(
+    password,
+    user.password
+); for verify
+
+
+JWT ka basic structure
+JWT generally 3 parts ka hota hai:
+HEADER.PAYLOAD.SIGNATURE
+
+Example:
+xxxxx.yyyyy.zzzzz
+
+Header
+Batata hai token kis algorithm/type se related hai.
+Payload
+User-related claims/data.
+Example conceptually:
+{
+    "userId": "123",
+    "email": "mayank@gmail.com"
+}
+
+Signature
+Token ko verify karne ke liye use hota hai.
+⚠️ Important
+JWT payload ko secret storage mat samajhna.
+JWT ka payload generally encoded hota hai, encrypted nahi. Isliye:
+❌ password JWT me mat daalna.
+Good:
+{
+    "userId": "123"
+}
+
+Bad:
+{
+    "userId": "123",
+    "password": "mayank123"
+}
+
+JWT
+
+Maan lo humne ek route banaya:
+GET /api/users/profile
+
+Hum chahte hain ki sirf logged-in user is route ko access kare.
+Flow:
+Login
+  ↓
+JWT Token
+  ↓
+Client
+  ↓
+GET /api/users/profile
+  ↓
+Authorization Header
+  ↓
+Auth Middleware
+  ↓
+JWT Verify
+  ↓
+Controller
+
+Step 55 — Authorization
